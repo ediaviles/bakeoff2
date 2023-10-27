@@ -169,6 +169,7 @@ void scaffoldControlLogic()
     vMouse.sub(vLogo);
 
     logoRotation = ((degrees(vMouse.heading())) + 90)  % 360;
+    println(logoRotation);
     text(((degrees(vMouse.heading())) + 90)  % 360, mouseX, mouseY) ;
 
   }
@@ -262,27 +263,32 @@ boolean mouseInDraggingRegion() {
 // returns whether or not the mouse is over the blue resizing circle
 boolean mouseOnResizeCircle() { 
   boolean inCircle = false;
-  float cSide = logoApproxSideLen / 2;
   
-  // tried this to get circle center coords accounting for rotation but it absolutely does not work
-  //float cx = cSide * cos(radians(logoRotation)) - cSide * sin(radians(logoRotation)) + 2 * (logoX + cSide);
-  //float cy = cSide * sin(radians(logoRotation)) + cSide * cos(radians(logoRotation)) + 2 * (logoY + cSide);
+  translate(logoX, logoY);
+  float cx = (logoApproxSideLen/2) * cos(radians(logoRotation)) - (-logoApproxSideLen / 2) * sin(radians(logoRotation));
+  float cy = (logoApproxSideLen/2) * sin(radians(logoRotation)) + (-logoApproxSideLen / 2) * cos(radians(logoRotation));
   
-  // not accounting for rotation rn
-  float cx = logoX + logoApproxSideLen / 2;
-  float cy = logoY + logoApproxSideLen / 2;
+  println("fx and cy ", cx, cy);
+  
+  float rx = logoX - cy;
+  float ry = logoY + cx;
 
-  inCircle = dist(mouseX, mouseY, cx, cy) <= resizeCircleSize / 2;
+  inCircle = dist(mouseX, mouseY, rx, ry) <= resizeCircleSize / 2;
+  
   System.out.println("in circle? " + dist(mouseX, mouseY, logoApproxSideLen / 2, logoApproxSideLen / 2));
   return inCircle;
 }
 
 // returns whether or not the mouse is over the green rotating circle
 boolean mouseOnRotateCircle() {
-  // again not accounting for rotation rn
-  float cx = logoX;
-  float cy = logoY - logoApproxSideLen / 2;
+
+  translate(logoX, logoY);
+  float cx = 0 * cos(radians(logoRotation)) - (logoApproxSideLen / 2) * sin(radians(logoRotation));
+  float cy = 0 * sin(radians(logoRotation)) + (logoApproxSideLen / 2) * cos(radians(logoRotation));
   
-  return dist(mouseX, mouseY, cx, cy) <= resizeCircleSize / 2;
+  float rx = logoX - cx;
+  float ry = logoY - cy;
+  
+  return dist(mouseX, mouseY, rx, ry) <= resizeCircleSize / 2;
   
 }
