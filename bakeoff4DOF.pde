@@ -137,41 +137,25 @@ void draw() {
 
 //my example design for control, which is terrible
 void scaffoldControlLogic()
-{
-  //upper left corner, rotate counterclockwise
-  text("CCW", inchToPix(.4f), inchToPix(.4f));
-  if (mousePressed && dist(0, 0, mouseX, mouseY)<inchToPix(.8f))
-    logoRotation--;
-
-  //upper right corner, rotate clockwise
-  text("CW", width-inchToPix(.4f), inchToPix(.4f));
-  if (mousePressed && dist(width, 0, mouseX, mouseY)<inchToPix(.8f))
-    logoRotation++;
-
-    
+{    
   if (isDragging) {
     logoX = mouseX + offsetX;
     logoY = mouseY + offsetY;
   }
   if (isResizing) {
-    
+
     // probably want to tweak this scale factor / sizeChange because resizing feels a little janky
     float scaleFactor = 0.1;
-    float sizeChange = (((logoZ + mouseX - offsetX) * (inchToPix(4f) - 0.01)) / width) + 0.01;
-    sizeChange = logoZ + ((mouseX - offsetX) + (mouseY - offsetY)) / 2 * scaleFactor;
+    float sizeChange = logoZ + ((mouseX - offsetX) + (mouseY - offsetY)) / 2 * scaleFactor;
     logoZ = constrain(sizeChange, .01, inchToPix(4f));
     logoApproxSideLen = 2 * logoZ / sqrt(2);
   }
   
   if (isRotating) {
     PVector vMouse = new PVector(mouseX, mouseY);
-    PVector vLogo = new PVector(offsetX, offsetY);
+    PVector vLogo = new PVector(logoX, logoY);
     vMouse.sub(vLogo);
-
     logoRotation = ((degrees(vMouse.heading())) + 90)  % 360;
-    println(logoRotation);
-    text(((degrees(vMouse.heading())) + 90)  % 360, mouseX, mouseY) ;
-
   }
 }
 
@@ -268,14 +252,11 @@ boolean mouseOnResizeCircle() {
   float cx = (logoApproxSideLen/2) * cos(radians(logoRotation)) - (-logoApproxSideLen / 2) * sin(radians(logoRotation));
   float cy = (logoApproxSideLen/2) * sin(radians(logoRotation)) + (-logoApproxSideLen / 2) * cos(radians(logoRotation));
   
-  println("fx and cy ", cx, cy);
-  
   float rx = logoX - cy;
   float ry = logoY + cx;
 
   inCircle = dist(mouseX, mouseY, rx, ry) <= resizeCircleSize / 2;
   
-  System.out.println("in circle? " + dist(mouseX, mouseY, logoApproxSideLen / 2, logoApproxSideLen / 2));
   return inCircle;
 }
 
