@@ -143,12 +143,10 @@ void scaffoldControlLogic()
     logoY = mouseY + offsetY;
   }
   if (isResizing) {
-
-    // probably want to tweak this scale factor / sizeChange because resizing feels a little janky
-    float scaleFactor = 0.1;
-    float sizeChange = logoZ + ((mouseX - offsetX) + (mouseY - offsetY)) / 2 * scaleFactor;
-    logoZ = constrain(sizeChange, .01, inchToPix(4f));
+    float sizeChange = dist(mouseX, mouseY, logoX, logoY);
+    logoZ = constrain(sizeChange, 0.01, inchToPix(4f));
     logoApproxSideLen = 2 * logoZ / sqrt(2);
+    
   }
   
   if (isRotating) {
