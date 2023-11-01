@@ -75,7 +75,12 @@ void draw() {
   background(40); //background is dark grey
   fill(200);
   noStroke();
-
+  textAlign(LEFT);
+  text("Match the red square to the red outline", 40, 40);
+  text("Use the node on the top right of the square to change the size of the square.", 40, 60);
+  text("Use the node on the top of the square to rotate the square.", 40, 80);
+  text("The nodes, square and outline will turn green once the correct conditions are met.", 40, 100);
+  text("Double click on the center of the screen to submit and move on to the next square.", 40, 120);
   //shouldn't really modify this printout code unless there is a really good reason to
   if (userDone)
   {
@@ -148,6 +153,7 @@ void draw() {
   //fill(60, 60, 192, 192);
   rect(0, 0, logoZ, logoZ);
   
+
   popMatrix();
       
   //===========DRAW EXAMPLE CONTROLS=================
