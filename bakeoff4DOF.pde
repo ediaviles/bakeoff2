@@ -109,6 +109,11 @@ void draw() {
   }
 
   //===========DRAW LOGO SQUARE=================
+  Destination d = destinations.get(trialIndex);  
+  boolean closeDist = dist(d.x, d.y, logoX, logoY)<inchToPix(.05f); //has to be within +-0.05"
+  boolean closeRotation = calculateDifferenceBetweenAngles(d.rotation, logoRotation)<=5;
+  boolean closeZ = abs(d.z - logoZ)<inchToPix(.1f); //has to be within +-0.1"  
+  
   pushMatrix();
   
   translate(logoX, logoY); //translate draw center to the center oft he logo square
@@ -118,13 +123,29 @@ void draw() {
     
   stroke(190,190,190,190);
   rect(0, 0, logoApproxSideLen, logoApproxSideLen);
-  fill(100, 100, 255, 255);
+  if (closeZ) {
+    fill(0, 255, 0, 255);
+  } else {
+    fill(255, 0, 0, 255);
+  }
+  
   noStroke();
   circle(logoApproxSideLen / 2, logoApproxSideLen / 2, resizeCircleSize);
-  fill(100, 255, 100, 255);
+  
+  if (closeRotation) {
+    fill(0, 255, 0, 255);
+  } else {
+    fill(255, 0, 0, 255);
+  }
+  
   circle(0, -logoApproxSideLen / 2, resizeCircleSize);
-
-  fill(60, 60, 192, 192);
+  
+  if (closeDist) {
+    fill(0, 255, 0, 255);
+  } else {
+    fill(255, 0, 0, 255);
+  }
+  //fill(60, 60, 192, 192);
   rect(0, 0, logoZ, logoZ);
   
   popMatrix();
