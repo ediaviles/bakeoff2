@@ -75,20 +75,23 @@ void draw() {
   background(40); //background is dark grey
   fill(200);
   noStroke();
-  textAlign(LEFT);
-  text("Match the red square to the red outline", 40, 40);
-  text("Use the node on the top right of the square to change the size of the square.", 40, 60);
-  text("Use the node on the top of the square to rotate the square.", 40, 80);
-  text("The nodes, square and outline will turn green once the correct conditions are met.", 40, 100);
-  text("Double click on the center of the screen to submit and move on to the next square.", 40, 120);
+
   //shouldn't really modify this printout code unless there is a really good reason to
   if (userDone)
   {
-    text("User completed " + trialCount + " trials", width/2, inchToPix(.4f));
-    text("User had " + errorCount + " error(s)", width/2, inchToPix(.4f)*2);
-    text("User took " + (finishTime-startTime)/1000f/trialCount + " sec per destination", width/2, inchToPix(.4f)*3);
-    text("User took " + ((finishTime-startTime)/1000f/trialCount+(errorCount*errorPenalty)) + " sec per destination inc. penalty", width/2, inchToPix(.4f)*4);
+    text("User completed " + trialCount + " trials", width/2, (height / 2));
+    text("User had " + errorCount + " error(s)", width/2, (height / 2) + inchToPix(.4f));
+    text("User took " + (finishTime-startTime)/1000f/trialCount + " sec per destination", width/2, (height / 2) + inchToPix(.4f)*2);
+    text("User took " + ((finishTime-startTime)/1000f/trialCount+(errorCount*errorPenalty)) + " sec per destination inc. penalty", width/2, (height / 2) +  inchToPix(.4f)*3);
     return;
+  } else {
+    textAlign(LEFT);
+    text("corner circle = resize", 40, 60);
+    text("edge circle = rotate", 40, 80);
+    text("click and drag to remove", 40, 100);
+    text("double click to submit", 40, 120);
+    textAlign(CENTER);
+
   }
 
   //===========DRAW DESTINATION SQUARES=================
